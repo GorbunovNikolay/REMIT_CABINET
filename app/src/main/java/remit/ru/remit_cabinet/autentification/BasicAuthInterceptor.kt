@@ -1,4 +1,4 @@
-package remit.ru.remit_cabinet
+package remit.ru.remit_cabinet.autentification
 
 import okhttp3.Credentials
 import okhttp3.Interceptor

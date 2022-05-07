@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">REMIT_CABINET</string>
-    <string name="send_request_to_1c">Передать запрос в 1С</string>
-    <string name="textview">""</string>
+    <string name="app_name">Кабинет сотрудника РЕМИТ</string>
+    <string name="send_request_to_1c">Войти</string>
+    <string name="textview">" "</string>
 </resources>

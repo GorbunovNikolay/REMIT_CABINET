@@ -1,9 +1,15 @@
-package remit.ru.remit_cabinet
+package remit.ru.remit_cabinet.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
+import remit.ru.remit_cabinet.*
+import remit.ru.remit_cabinet.api.ApiInterface
+import remit.ru.remit_cabinet.autentification.BasicAuthInterceptor
 import remit.ru.remit_cabinet.databinding.ActivityMainBinding
+import remit.ru.remit_cabinet.otherClass.Authorization
+import remit.ru.remit_cabinet.utils.AndroidUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +26,15 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val errorKey = intent.getStringExtra("errorKey")
+
+        if (errorKey != null) {
+            binding.textView.text = errorKey
+        }
+
+        var smsKey = ""
+        var employee = ""
+
         binding.button.setOnClickListener {
 
             val client =  OkHttpClient.Builder()
@@ -34,15 +49,28 @@ class MainActivity : AppCompatActivity() {
                 .build()
                 .create(ApiInterface::class.java)
 
-            val id = binding.editTextNumber.text.toString()
+            val phoneNumber = "7" + binding.phoneNumber.text.toString()
 
-            val retrofitData = retrofitBuilder.getData(id)
+            if (phoneNumber.length != 11) {
+                return@setOnClickListener
+            }
 
-            retrofitData.enqueue(object : Callback<MyData?> {
-                override fun onResponse(call: Call<MyData?>, response: Response<MyData?>) {
+            AndroidUtils.hideKeyboard(binding.root)
+
+            val retrofitData = retrofitBuilder.getData(phoneNumber)
+
+            retrofitData.enqueue(object : Callback<Authorization?> {
+                override fun onResponse(call: Call<Authorization?>, response: Response<Authorization?>) {
                     if (response.isSuccessful) {
                         val responseBody = response.body() ?: throw RuntimeException("body is null")
-                        binding.textView.text = responseBody.serverResponse
+                        employee = responseBody.authorization.employee.toString()
+                        smsKey = responseBody.authorization.randomNumber.toString()
+
+                        val intent = Intent(this@MainActivity, VerificationActivity::class.java)
+                        intent.putExtra("smsKey", smsKey)
+                        intent.putExtra("phoneNumber", phoneNumber)
+                        intent.putExtra("employee", employee)
+                        startActivity(intent)
                     }
                     else {
                         val errorBody = response.errorBody()!!
@@ -50,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<MyData?>, t: Throwable) {
+                override fun onFailure(call: Call<Authorization?>, t: Throwable) {
 
                 }
             })
