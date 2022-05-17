@@ -20,7 +20,18 @@ class VerificationActivity : AppCompatActivity() {
         val phoneNumber = intent.getStringExtra("phoneNumber")
         val employee = intent.getStringExtra("employee")
 
-        binding.descriptionOfActions.text = "На указанный Вами номер $phoneNumber был отправлен 6 значный код, введите его:"
+        if (smsKey == "") {
+            binding.descriptionOfActions.text = ""
+            binding.OK.visibility = View.INVISIBLE
+
+            AndroidUtils.hideKeyboard(binding.root)
+            binding.descriptionOfActions.text = "Добро пожаловать $employee!"
+            binding.enteredCode.visibility = View.INVISIBLE
+        }
+        else {
+            binding.descriptionOfActions.text = "На указанный Вами номер $phoneNumber был отправлен 6 значный код, введите его:"
+        }
+
 
         binding.OK.setOnClickListener {
             val enteredCode = binding.enteredCode.text.toString()
