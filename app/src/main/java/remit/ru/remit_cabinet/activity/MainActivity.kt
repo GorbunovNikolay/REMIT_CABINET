@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.GsonBuilder
 import remit.ru.remit_cabinet.databinding.ActivityMainBinding
 import remit.ru.remit_cabinet.model.MainViewModel
 import remit.ru.remit_cabinet.utils.AndroidUtils
@@ -29,33 +30,57 @@ class MainActivity : AppCompatActivity() {
         mvmodel.getToken()
 
         //подписка на изменение vmodel tokenFirebase, вызывается для авторизации по токену при открытии
-        mvmodel.tokenFirebase.observe(this, ) { token ->
+        mvmodel.tokenFirebase.observe(this) { token ->
             //если ранее была авторизация по телефону, пытаемся загрузить сотрудника по токену в 1С
             mvmodel.loadAuthorizedUser(token)
         }
 
         //подписка на изменение vmodel resultAuthorization, вызывается в случае успеха авторизации
-        mvmodel.resultAuthorization.observe(this, ) { authorization ->
+        mvmodel.resultAuthorization.observe(this) { authorization ->
             val intent = Intent(this@MainActivity, VerificationActivity::class.java)
             intent.putExtra("smsKey", authorization.randomNumber)
-            intent.putExtra("phoneNumber", binding.phoneNumber.text.toString())
-            intent.putExtra("employee", authorization.employee.fullName)
+            if (binding.phoneNumber.text.isNotEmpty()){
+                intent.putExtra("phoneNumber", binding.phoneNumber.text.toString())
+            }
+            else intent.putExtra("phoneNumber", authorization.employee.phoneNumber)
+
+            val employeeJson = GsonBuilder().create().toJson(authorization.employee).toString()
+            intent.putExtra("employee", employeeJson)
             startActivity(intent)
         }
 
         //подписка на изменение vmodel errorAuthorization, вызывается в случае отказа авторизации
-        mvmodel.errorAuthorization.observe(this, ) { errorAuthorizationText ->
+        mvmodel.errorAuthorization.observe(this) { errorAuthorizationText ->
             if (errorAuthorizationText.equals("Сотрудник с данным токеном не найден в 1С")) {
                 binding.textView.text = ""
             }
-            else binding.textView.text = errorAuthorizationText
+            else {
+                binding.textView.text = errorAuthorizationText
+                AndroidUtils.vibratePhone(binding.root)
+            }
+
         }
 
         //слушатель нажатия авторизации по номеру телефона
         binding.button.setOnClickListener {
-            val phoneNumber = "7" + binding.phoneNumber.text.toString()
+            val editnumber = binding.phoneNumber.text.toString()
+
+            var counter = 1
+            val sb = StringBuilder()
+            for (char in editnumber) {
+                if (counter == 1 && !char.equals('9')) {
+                    sb.append("")
+                    counter++
+                    continue
+                }
+                sb.append(char.toString())
+                counter++
+            }
+
+            val phoneNumber = "7" + sb.toString()
 
             if (phoneNumber.length != 11) {
+                AndroidUtils.vibratePhone(binding.root)
                 return@setOnClickListener
             }
 

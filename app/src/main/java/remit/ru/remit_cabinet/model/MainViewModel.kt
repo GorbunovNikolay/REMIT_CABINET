@@ -9,6 +9,7 @@ import remit.ru.remit_cabinet.SecretConstants
 import remit.ru.remit_cabinet.api.ApiInterface
 import remit.ru.remit_cabinet.autentification.BasicAuthInterceptor
 import remit.ru.remit_cabinet.otherClass.Authorization
+import remit.ru.remit_cabinet.otherClass.Employee
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -92,5 +93,4 @@ class MainViewModel : ViewModel() {
             Log.e("TAG", "Token -> $it")
         }
     }
-
 }

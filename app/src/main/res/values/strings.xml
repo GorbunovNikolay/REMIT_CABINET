@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Кабинет сотрудника РЕМИТ</string>
-    <string name="send_request_to_1c">Войти</string>
+    <string name="app_name">Кабинет сотрудника</string>
+    <string name="send_request_to_1c">Вход</string>
     <string name="textview">" "</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

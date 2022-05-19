@@ -4,70 +4,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".activity.MainActivity">
+
+
+    <ImageView
+        android:id="@+id/background_authorization"
+        android:layout_width="488dp"
+        android:layout_height="816dp"
+        app:layout_constraintBottom_toBottomOf="@+id/superman"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logo_group_up"
+        app:layout_constraintVertical_bias="0.388"
+        app:srcCompat="@drawable/background_authorization" />
+
+    <ImageView
+        android:id="@+id/superman"
+        android:layout_width="416dp"
+        android:layout_height="378dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_superman" />
+
+    <ImageView
+        android:id="@+id/logo_group_up"
+        android:layout_width="450dp"
+        android:layout_height="215dp"
+        android:layout_marginTop="-38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_group_up" />
+
+    <ImageView
+        android:id="@+id/remitview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/view_remit" />
+
+    <ImageView
+        android:id="@+id/view_remit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/view_remit" />
+
+    <ImageView
+        android:id="@+id/view_polosa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/remitview"
+        app:layout_constraintStart_toStartOf="@+id/remitview"
+        app:layout_constraintTop_toBottomOf="@+id/remitview"
+        app:srcCompat="@drawable/ic_polosa" />
+
+    <ImageView
+        android:id="@+id/view_kabinet_sotrudnika"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/remitview"
+        app:layout_constraintStart_toStartOf="@+id/remitview"
+        app:layout_constraintTop_toBottomOf="@+id/view_polosa"
+        app:srcCompat="@drawable/kabinet_sotrudnika" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_red"
+        android:backgroundTint="@color/redRemit"
         android:text="@string/send_request_to_1c"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumber"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
+        android:layout_marginTop="-30dp"
         android:text="@string/textview"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
+        android:textColor="@color/redRemit"
+        android:textSize="14sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_group_up"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/phoneNumber"
+        style="@style/CardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="6"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/circle_white"
+        android:ems="7"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="телефон"
         android:inputType="phone"
-        android:maxLength="10"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/codeCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:text="+7"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
-        app:layout_constraintEnd_toStartOf="@+id/phoneNumber"
-        app:layout_constraintTop_toTopOf="@+id/phoneNumber" />
-
-    <TextView
-        android:id="@+id/hintInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="51dp"
-        android:text="Введите номер телефона:"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
+        android:maxLength="11"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/redRemit"
+        android:textColorHighlight="@color/lightGrey"
+        android:textColorHint="@color/lightGrey"
+        android:textColorLink="@color/redRemit"
+        android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/background_authorization" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
